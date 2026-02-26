@@ -1,5 +1,6 @@
 import streamlit as st
 import google.generativeai as genai
+import time
 
 # Configure page
 st.set_page_config(
@@ -292,100 +293,298 @@ if "community_challenges" not in st.session_state:
 if "goal_predictions" not in st.session_state:
     st.session_state.goal_predictions = {}
 
-# ============ SIGNUP PAGE ============
+# ============ SIGNUP PAGE (ADVANCED) ============
 def signup_page():
-    """Display the futuristic signup page"""
-    # Custom CSS for signup page
+    """Display the advanced, interactive & motivating signup page"""
+    # Advanced CSS styling
     st.markdown("""
     <style>
-    .signup-box {
-        background: linear-gradient(135deg, rgba(26, 31, 74, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%);
-        border-radius: 20px;
-        padding: 60px 80px;
-        box-shadow: 0 0 60px rgba(0, 255, 136, 0.3), inset 0 0 30px rgba(0, 204, 255, 0.1);
-        border: 2px solid rgba(0, 255, 136, 0.3);
-        text-align: center;
-        max-width: 500px;
-        backdrop-filter: blur(20px);
-        animation: float 6s ease-in-out infinite;
+    .signup-container {
+        background: linear-gradient(135deg, #0a0e27 0%, #1a1f4a 25%, #0f0f2e 50%, #1a1f4a 75%, #0a0e27 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+        position: relative;
+        overflow: hidden;
     }
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
+    
+    .signup-box {
+        background: linear-gradient(135deg, rgba(26, 31, 74, 0.9) 0%, rgba(10, 14, 39, 0.95) 100%);
+        border-radius: 24px;
+        padding: 60px;
+        box-shadow: 
+            0 0 100px rgba(0, 255, 136, 0.35),
+            0 0 60px rgba(0, 204, 255, 0.25),
+            inset 0 0 50px rgba(0, 255, 136, 0.08);
+        border: 2px solid rgba(0, 255, 136, 0.4);
+        text-align: center;
+        max-width: 550px;
+        backdrop-filter: blur(25px);
+        animation: float-up 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    @keyframes float-up {
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .signup-title {
+        font-family: 'Orbitron', monospace;
+        font-size: 52px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #00ff88 0%, #00ccff 50%, #ffbe0b 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 5px;
+        letter-spacing: 2px;
+        animation: glow 3s ease-in-out infinite;
+    }
+    
+    @keyframes glow {
+        0%, 100% { text-shadow: 0 0 30px rgba(0, 255, 136, 0.3); }
+        50% { text-shadow: 0 0 50px rgba(0, 255, 136, 0.6), 0 0 20px rgba(0, 204, 255, 0.4); }
+    }
+    
+    .signup-subtitle {
+        color: #00ff88;
+        font-size: 14px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: bold;
+    }
+    
+    .signup-tagline {
+        color: #00ccff;
+        font-size: 13px;
+        margin-bottom: 40px;
+        font-style: italic;
+        opacity: 0.85;
+    }
+    
+    .benefits-row {
+        display: flex;
+        justify-content: space-around;
+        margin: 30px 0;
+        gap: 10px;
+    }
+    
+    .benefit-item {
+        text-align: center;
+        font-size: 24px;
+    }
+    
+    .benefit-text {
+        color: rgba(224, 224, 224, 0.7);
+        font-size: 11px;
+        margin-top: 5px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .input-field {
+        background: rgba(255, 255, 255, 0.08);
+        border: 2px solid rgba(0, 255, 136, 0.25);
+        border-radius: 12px;
+        padding: 14px 16px;
+        color: #e0e0e0;
+        font-family: 'Space Mono', monospace;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+        font-size: 14px;
+    }
+    
+    .input-field:focus {
+        border-color: #00ff88;
+        box-shadow: 0 0 25px rgba(0, 255, 136, 0.4), inset 0 0 10px rgba(0, 255, 136, 0.1);
+        background: rgba(255, 255, 255, 0.12);
+    }
+    
+    .validation-text {
+        font-size: 11px;
+        margin-top: 5px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        min-height: 16px;
+    }
+    
+    .validation-good {
+        color: #00ff88;
+    }
+    
+    .validation-bad {
+        color: #ff4444;
+    }
+    
+    .stButton > button {
+        background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+        color: #0a0e27;
+        border: none;
+        border-radius: 12px;
+        padding: 14px;
+        font-size: 15px;
+        font-weight: bold;
+        font-family: 'Orbitron', monospace;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        cursor: pointer;
+        box-shadow: 0 0 25px rgba(0, 255, 136, 0.5);
+        margin: 5px;
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 0 50px rgba(0, 255, 136, 0.8), 0 0 25px rgba(0, 204, 255, 0.6);
+    }
+    
+    .stButton > button:active {
+        transform: translateY(-1px);
+    }
+    
+    .divider-line {
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.4), transparent);
+        margin: 30px 0;
     }
     </style>
     """, unsafe_allow_html=True)
     
-    col1, col2, col3 = st.columns([1, 2, 1])
+    col1, col2, col3 = st.columns([1, 2.5, 1])
+    
+    with col1:
+        st.markdown("""
+        <div style="text-align: center; padding: 40px 0; font-size: 45px; opacity: 0.6;">
+            <div>⚡</div>
+            <div style="margin: 40px 0;">💪</div>
+            <div style="margin: 40px 0;">🎯</div>
+            <div style="margin: 40px 0;">🏆</div>
+            <div style="margin: 40px 0;">🚀</div>
+        </div>
+        """, unsafe_allow_html=True)
     
     with col2:
         st.markdown('<div class="signup-box">', unsafe_allow_html=True)
         
-        # Logo/Title
-        st.markdown('<h1 style="text-align: center; font-family: Orbitron, monospace; color: transparent; background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 48px; margin-bottom: 5px; text-shadow: 0 0 30px rgba(0, 255, 136, 0.5); font-weight: 900;">⚽ COACHBOT AI</h1>', unsafe_allow_html=True)
-        st.markdown('<p style="text-align: center; color: #00ff88; font-size: 14px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;">[ CREATE YOUR ACCOUNT ]</p>', unsafe_allow_html=True)
+        # Animated emoji
+        st.markdown("""
+        <div style="text-align: center; font-size: 70px; margin-bottom: 15px; animation: bounce 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;">
+            🚀
+        </div>
+        <style>
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        </style>
+        """, unsafe_allow_html=True)
         
-        st.divider()
+        st.markdown('<h1 class="signup-title">⚽ COACHBOT AI</h1>', unsafe_allow_html=True)
+        st.markdown('<p class="signup-subtitle">JOIN THE REVOLUTION</p>', unsafe_allow_html=True)
+        st.markdown('<p class="signup-tagline">Unlock your athletic potential with AI-powered coaching</p>', unsafe_allow_html=True)
         
-        # Signup form
+        # Benefits preview
+        st.markdown("""
+        <div class="benefits-row">
+            <div class="benefit-item">
+                <div>🤖</div>
+                <div class="benefit-text">AI Coach</div>
+            </div>
+            <div class="benefit-item">
+                <div>📊</div>
+                <div class="benefit-text">Real Analytics</div>
+            </div>
+            <div class="benefit-item">
+                <div>🎯</div>
+                <div class="benefit-text">Smart Goals</div>
+            </div>
+            <div class="benefit-item">
+                <div>🏅</div>
+                <div class="benefit-text">Achievements</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown('<div class="divider-line"></div>', unsafe_allow_html=True)
+        
+        # Sign up form with validation
         new_username = st.text_input(
-            "👤 Choose Username",
-            placeholder="At least 3 characters",
-            key="signup_username"
+            "👤 Create Username",
+            placeholder="3+ characters",
+            key="signup_username",
+            label_visibility="collapsed"
         )
+        
+        # Real-time username validation
+        if new_username:
+            if len(new_username) < 3:
+                st.markdown('<p class="validation-text validation-bad">❌ Minimum 3 characters required</p>', unsafe_allow_html=True)
+            elif new_username in st.session_state.registered_users:
+                st.markdown('<p class="validation-text validation-bad">❌ Username already taken</p>', unsafe_allow_html=True)
+            else:
+                st.markdown('<p class="validation-text validation-good">✅ Username available</p>', unsafe_allow_html=True)
         
         new_email = st.text_input(
-            "📧 Email",
+            "📧 Email Address",
             placeholder="your@email.com",
-            key="signup_email"
+            key="signup_email",
+            label_visibility="collapsed"
         )
+        
+        # Email validation
+        if new_email:
+            if "@" not in new_email or "." not in new_email:
+                st.markdown('<p class="validation-text validation-bad">❌ Invalid email format</p>', unsafe_allow_html=True)
+            else:
+                st.markdown('<p class="validation-text validation-good">✅ Valid email</p>', unsafe_allow_html=True)
         
         new_password = st.text_input(
             "🔒 Password",
             type="password",
-            placeholder="At least 4 characters",
-            key="signup_password"
+            placeholder="4+ characters (strong recommended)",
+            key="signup_password",
+            label_visibility="collapsed"
         )
+        
+        # Password strength indicator
+        if new_password:
+            strength = "Weak"
+            color = "validation-bad"
+            if len(new_password) >= 8:
+                strength = "Strong"
+                color = "validation-good"
+            elif len(new_password) >= 6:
+                strength = "Medium"
+                color = "validation-text"
+            
+            st.markdown(f'<p class="validation-text {color}">⚡ Strength: {strength}</p>', unsafe_allow_html=True)
         
         confirm_password = st.text_input(
             "🔐 Confirm Password",
             type="password",
             placeholder="Re-enter password",
-            key="signup_confirm_password"
+            key="signup_confirm_password",
+            label_visibility="collapsed"
         )
         
-        st.markdown("""
-        <style>
-        .stButton > button {
-            background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
-            color: #0a0e27;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: bold;
-            font-family: 'Orbitron', monospace;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-        }
-        .stButton > button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 40px rgba(0, 255, 136, 0.8), 0 0 20px rgba(0, 204, 255, 0.5);
-        }
-        </style>
-        """, unsafe_allow_html=True)
+        # Password match validation
+        if confirm_password and new_password:
+            if new_password == confirm_password:
+                st.markdown('<p class="validation-text validation-good">✅ Passwords match</p>', unsafe_allow_html=True)
+            else:
+                st.markdown('<p class="validation-text validation-bad">❌ Passwords don\'t match</p>', unsafe_allow_html=True)
+        
+        st.markdown('<div class="divider-line"></div>', unsafe_allow_html=True)
         
         col_a, col_b = st.columns(2)
         with col_a:
-            if st.button("✅ Sign Up", key="signup_btn", use_container_width=True):
+            if st.button("✨ CREATE ACCOUNT", key="signup_btn", use_container_width=True):
+                # Comprehensive validation
                 if not new_username or not new_email or not new_password or not confirm_password:
                     st.error("❌ Please fill all fields!")
                 elif len(new_username) < 3:
                     st.error("❌ Username must be at least 3 characters!")
-                elif "@" not in new_email:
+                elif "@" not in new_email or "." not in new_email:
                     st.error("❌ Please enter a valid email!")
                 elif len(new_password) < 4:
                     st.error("❌ Password must be at least 4 characters!")
@@ -399,171 +598,410 @@ def signup_page():
                         "password": new_password,
                         "email": new_email
                     }
-                    st.success("✅ Account created successfully! Please login.")
+                    st.markdown("""
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div style="font-size: 40px; animation: celebrate 0.6s ease-out;">🎉</div>
+                        <h3 style="color: #00ff88;">WELCOME CHAMPION!</h3>
+                        <p style="color: #00ccff;">Your account is ready. Redirecting...</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    st.balloons()
                     st.session_state.show_signup = False
+                    time.sleep(1.5)
                     st.rerun()
         
         with col_b:
-            if st.button("🔙 Back to Login", key="back_to_login", use_container_width=True):
+            if st.button("🔙 BACK", key="back_to_login", use_container_width=True):
                 st.session_state.show_signup = False
                 st.rerun()
         
+        st.markdown('<p style="text-align: center; color: #00ccff; font-size: 11px; margin-top: 20px; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px;">Secure • Fast • Powerful</p>', unsafe_allow_html=True)
+        
         st.markdown('</div>', unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+        <div style="text-align: center; padding: 40px 0; font-size: 45px; opacity: 0.6;">
+            <div>⚽</div>
+            <div style="margin: 40px 0;">🏀</div>
+            <div style="margin: 40px 0;">⚾</div>
+            <div style="margin: 40px 0;">🎾</div>
+            <div style="margin: 40px 0;">🏈</div>
+        </div>
+        """, unsafe_allow_html=True)
 
-# ============ LOGIN PAGE ============
+# ============ LOGIN PAGE (ADVANCED & INTERACTIVE) ============
 def login_page():
-    """Display the futuristic login page"""
-    # Custom CSS for login page
+    """Display the premium, interactive, and motivating login page"""
+    # Advanced CSS styling with animations
     st.markdown("""
     <style>
-    body {
-        background: linear-gradient(135deg, #0a0e27 0%, #1a1f4a 50%, #0f0f2e 100%);
-    }
-    .login-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .login-outer {
+        background: linear-gradient(135deg, #0a0e27 0%, #1a1f4a 25%, #0f0f2e 50%, #1a1f4a 75%, #0a0e27 100%);
         min-height: 100vh;
+        padding: 40px 20px;
+        position: relative;
+        overflow: hidden;
     }
+    
+    .login-wrapper {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
     .login-box {
-        background: linear-gradient(135deg, rgba(26, 31, 74, 0.8) 0%, rgba(10, 14, 39, 0.9) 100%);
-        border-radius: 20px;
-        padding: 60px 80px;
-        box-shadow: 0 0 80px rgba(0, 255, 136, 0.4), inset 0 0 40px rgba(0, 204, 255, 0.1);
-        border: 2px solid rgba(0, 255, 136, 0.3);
+        background: linear-gradient(135deg, rgba(26, 31, 74, 0.95) 0%, rgba(10, 14, 39, 0.98) 100%);
+        border-radius: 24px;
+        padding: 65px;
+        box-shadow: 
+            0 0 120px rgba(0, 255, 136, 0.4),
+            0 0 80px rgba(0, 204, 255, 0.3),
+            inset 0 0 60px rgba(0, 255, 136, 0.1);
+        border: 2.5px solid rgba(0, 255, 136, 0.45);
         text-align: center;
-        max-width: 500px;
-        backdrop-filter: blur(20px);
-        animation: glow 3s ease-in-out infinite;
+        max-width: 580px;
+        backdrop-filter: blur(30px);
+        animation: slideInCenter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        position: relative;
+        overflow: hidden;
     }
-    @keyframes glow {
-        0%, 100% { box-shadow: 0 0 80px rgba(0, 255, 136, 0.4), inset 0 0 40px rgba(0, 204, 255, 0.1); }
-        50% { box-shadow: 0 0 100px rgba(0, 255, 136, 0.6), inset 0 0 50px rgba(0, 204, 255, 0.2); }
+    
+    @keyframes slideInCenter {
+        0% { opacity: 0; transform: scale(0.95); }
+        100% { opacity: 1; transform: scale(1); }
     }
+    
+    .login-box::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
+        animation: orbit 8s linear infinite;
+        pointer-events: none;
+    }
+    
+    @keyframes orbit {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .login-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .login-emoji {
+        font-size: 75px;
+        margin-bottom: 15px;
+        animation: float-bounce 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        display: inline-block;
+    }
+    
+    @keyframes float-bounce {
+        0%, 100% { transform: translateY(0) rotateZ(0deg); }
+        50% { transform: translateY(-15px) rotateZ(2deg); }
+    }
+    
     .login-title {
-        font-size: 48px;
+        font-family: 'Orbitron', monospace;
+        font-size: 54px;
         font-weight: 900;
-        margin-bottom: 10px;
-        background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+        background: linear-gradient(135deg, #00ff88 0%, #00ccff 60%, #ffbe0b 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        font-family: 'Orbitron', monospace;
-        text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        margin-bottom: 8px;
+        letter-spacing: 3px;
+        animation: glow-pulse 3s ease-in-out infinite;
     }
-    .login-subtitle {
-        font-size: 14px;
+    
+    @keyframes glow-pulse {
+        0%, 100% { filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.3)); }
+        50% { filter: drop-shadow(0 0 50px rgba(0, 255, 136, 0.6)) drop-shadow(0 0 20px rgba(0, 204, 255, 0.4)); }
+    }
+    
+    .login-tagline {
         color: #00ff88;
-        margin-bottom: 50px;
+        font-size: 14px;
+        margin-bottom: 8px;
         text-transform: uppercase;
-        letter-spacing: 2px;
+        letter-spacing: 2.5px;
         font-weight: bold;
+        text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
     }
-    .stTextInput > div > div > input {
-        background: rgba(255, 255, 255, 0.05);
+    
+    .login-subtitle {
+        color: #00ccff;
+        font-size: 13px;
+        margin-bottom: 35px;
+        font-style: italic;
+        opacity: 0.85;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+    }
+    
+    .login-divider {
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.4), transparent);
+        margin: 30px 0;
+    }
+    
+    .features-line {
+        display: flex;
+        justify-content: space-around;
+        margin: 25px 0;
+        padding: 20px 0;
+        gap: 8px;
+    }
+    
+    .feature-badge {
+        background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 204, 255, 0.1) 100%);
+        border: 1.5px solid rgba(0, 255, 136, 0.3);
         border-radius: 10px;
-        padding: 12px;
-        border: 2px solid rgba(0, 255, 136, 0.3) !important;
+        padding: 12px 16px;
+        font-size: 12px;
+        color: #00ff88;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
         transition: all 0.3s ease;
+        cursor: default;
+    }
+    
+    .feature-badge:hover {
+        background: linear-gradient(135deg, rgba(0, 255, 136, 0.25) 0%, rgba(0, 204, 255, 0.2) 100%);
+        border-color: #00ff88;
+        box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    .login-input {
+        background: rgba(255, 255, 255, 0.08);
+        border: 2px solid rgba(0, 255, 136, 0.3);
+        border-radius: 12px;
+        padding: 15px 18px;
         color: #e0e0e0;
         font-family: 'Space Mono', monospace;
+        margin-bottom: 12px;
+        transition: all 0.3s ease;
+        font-size: 15px;
     }
-    .stTextInput > div > div > input:focus {
-        border-color: #00ff88 !important;
-        box-shadow: 0 0 20px rgba(0, 255, 136, 0.5), inset 0 0 10px rgba(0, 255, 136, 0.1);
+    
+    .login-input:focus {
+        border-color: #00ff88;
+        box-shadow: 0 0 30px rgba(0, 255, 136, 0.5), inset 0 0 15px rgba(0, 255, 136, 0.08);
+        background: rgba(255, 255, 255, 0.12);
+        transform: translateY(-2px);
     }
+    
     .stButton > button {
-        width: 100%;
-        border-radius: 10px;
-        padding: 12px;
-        font-size: 16px;
-        font-weight: bold;
         background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
         color: #0a0e27;
         border: none;
-        transition: all 0.3s ease;
-        cursor: pointer;
+        border-radius: 12px;
+        padding: 16px;
+        font-size: 16px;
+        font-weight: bold;
         font-family: 'Orbitron', monospace;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        cursor: pointer;
+        box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+        margin: 6px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stButton > button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: left 0.5s ease;
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 0 60px rgba(0, 255, 136, 0.9), 0 0 30px rgba(0, 204, 255, 0.7);
+    }
+    
+    .stButton > button:hover::before {
+        left: 100%;
+    }
+    
+    .stButton > button:active {
+        transform: translateY(-1px);
+    }
+    
+    .button-row {
+        display: flex;
+        gap: 10px;
+        margin: 15px 0;
+    }
+    
+    .btn-primary {
+        flex: 1;
+    }
+    
+    .btn-secondary {
+        flex: 1;
+    }
+    
+    .footer-text {
+        text-align: center;
+        color: #00ccff;
+        font-size: 12px;
+        margin-top: 20px;
         text-transform: uppercase;
         letter-spacing: 1px;
-        box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        opacity: 0.8;
     }
-    .stButton > button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 0 40px rgba(0, 255, 136, 0.8), 0 0 20px rgba(0, 204, 255, 0.5);
+    
+    .demo-hint {
+        background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 255, 0.08) 100%);
+        border: 1.5px dashed rgba(0, 255, 136, 0.3);
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 25px;
+        color: rgba(224, 224, 224, 0.8);
+        font-size: 12px;
+        line-height: 1.6;
     }
-    .signup-link {
-        margin-top: 20px;
-        font-size: 14px;
+    
+    .demo-hint-title {
         color: #00ff88;
+        font-weight: bold;
         text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+    }
+    
+    .demo-credentials {
+        color: #ffbe0b;
+        font-family: 'Space Mono', monospace;
+        font-weight: bold;
+        margin: 8px 0;
+    }
+    
+    .testimonial-box {
+        background: linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, rgba(0, 204, 255, 0.08) 100%);
+        border-left: 4px solid rgba(0, 255, 136, 0.5);
+        border-radius: 8px;
+        padding: 15px;
+        margin: 20px 0;
+        color: rgba(224, 224, 224, 0.85);
+        font-size: 13px;
+        font-style: italic;
+        line-height: 1.5;
+    }
+    
+    .testimonial-author {
+        color: #00ff88;
+        font-weight: bold;
+        margin-top: 8px;
+        text-transform: uppercase;
+        font-size: 11px;
         letter-spacing: 1px;
     }
     </style>
     """, unsafe_allow_html=True)
     
-    # Create centered login form
-    col1, col2, col3 = st.columns([1, 2, 1])
+    # Create the layout
+    col1, col2, col3 = st.columns([0.9, 2.2, 0.9])
     
-    # Left side sports symbols
+    # Left decorative elements
     with col1:
         st.markdown("""
-        <div style="text-align: center; padding: 40px 10px; font-size: 50px;">
-            <div>🏀</div>
-            <div style="margin: 30px 0;">🏈</div>
-            <div style="margin: 30px 0;">⚾</div>
-            <div style="margin: 30px 0;">🎾</div>
-            <div style="margin: 30px 0;">🏐</div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # Center login form
-    with col2:
-        st.markdown('<div class="login-box">', unsafe_allow_html=True)
-        
-        # Fitness image on top
-        st.markdown("""
-        <div style="text-align: center; font-size: 80px; margin-bottom: 20px; animation: bounce 2s infinite;">
-            💪
+        <div style="text-align: center; padding: 50px 10px; font-size: 48px; opacity: 0.5; animation: float 4s ease-in-out infinite;">
+            <div>🎯</div>
+            <div style="margin: 45px 0;">💪</div>
+            <div style="margin: 45px 0;">⚡</div>
+            <div style="margin: 45px 0;">🏆</div>
+            <div style="margin: 45px 0;">🚀</div>
         </div>
         <style>
-        @keyframes bounce {
+        @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
         </style>
         """, unsafe_allow_html=True)
+    
+    # Main login form
+    with col2:
+        st.markdown('<div class="login-box"><div class="login-content">', unsafe_allow_html=True)
         
-        # Logo/Title
-        st.markdown('<h1 style="text-align: center; font-family: Orbitron, monospace; color: transparent; background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 48px; margin-bottom: 5px; font-weight: 900;">⚽ COACHBOT AI</h1>', unsafe_allow_html=True)
-        st.markdown('<p style="text-align: center; color: #00ff88; font-size: 14px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;">⚡ YOUR PERSONAL SPORTS AI COACH ⚡</p>', unsafe_allow_html=True)
+        # Animated hero emoji
+        st.markdown('<div class="login-emoji">🤖</div>', unsafe_allow_html=True)
         
-        st.divider()
+        # Title and tagline
+        st.markdown('<h1 class="login-title">⚽ COACHBOT AI</h1>', unsafe_allow_html=True)
+        st.markdown('<p class="login-tagline">⚡ ELITE PERFORMANCE AWAITS ⚡</p>', unsafe_allow_html=True)
+        st.markdown('<p class="login-subtitle">Your AI-powered personal sports coach is ready</p>', unsafe_allow_html=True)
         
-        # Login form
+        # Feature badges
+        st.markdown("""
+        <div class="features-line">
+            <div class="feature-badge">🤖 AI Coach</div>
+            <div class="feature-badge">📊 Analytics</div>
+            <div class="feature-badge">🎯 Smart Goals</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown('<div class="login-divider"></div>', unsafe_allow_html=True)
+        
+        # Login input fields
         username = st.text_input(
-            "👤 Username",
+            "👤 USERNAME",
             placeholder="Enter your username",
-            key="login_username"
+            key="login_username",
+            label_visibility="collapsed"
         )
         
         password = st.text_input(
-            "🔒 Password",
+            "🔒 PASSWORD",
             type="password",
             placeholder="Enter your password",
-            key="login_password"
+            key="login_password",
+            label_visibility="collapsed"
         )
         
+        # Remember me simulation
+        col_check, col_empty = st.columns([1, 3])
+        with col_check:
+            remember = st.checkbox("Remember me", key="remember_login", label_visibility="collapsed")
+        
+        st.markdown('<div class="login-divider"></div>', unsafe_allow_html=True)
+        
+        # Login/Signup buttons
         col_a, col_b = st.columns(2)
+        
         with col_a:
-            if st.button("🚀 Login", key="login_btn", use_container_width=True):
+            if st.button("🚀 LOGIN", key="login_btn", use_container_width=True):
                 if username and password:
-                    # Check if user is registered
                     if username in st.session_state.registered_users:
                         if st.session_state.registered_users[username]["password"] == password:
                             st.session_state.logged_in = True
                             st.session_state.user_name = username
-                            st.success("✅ Login successful!")
+                            st.markdown("""
+                            <div style="text-align: center;">
+                                <div style="font-size: 50px; animation: celebrate 0.6s ease-out;">🎉</div>
+                                <h3 style="color: #00ff88; margin: 10px 0;">WELCOME BACK!</h3>
+                                <p style="color: #00ccff;">Loading your dashboard...</p>
+                            </div>
+                            """, unsafe_allow_html=True)
+                            st.balloons()
+                            time.sleep(0.8)
                             st.rerun()
                         else:
                             st.error("❌ Incorrect password!")
@@ -573,24 +1011,49 @@ def login_page():
                     st.warning("⚠️ Please enter both username and password!")
         
         with col_b:
-            if st.button("📝 Sign Up", key="signup_link_btn", use_container_width=True):
+            if st.button("📝 SIGN UP", key="signup_link_btn", use_container_width=True):
                 st.session_state.show_signup = True
                 st.rerun()
         
-        st.markdown('<p style="text-align: center; color: #00ccff; font-size: 12px; margin-top: 30px; text-transform: uppercase; letter-spacing: 1px;">💡 Demo: Create account or use test/test1234</p>', unsafe_allow_html=True)
+        # Demo accounts & features
+        st.markdown("""
+        <div class="demo-hint">
+            <div class="demo-hint-title">🎮 QUICK START:</div>
+            <div>Create your own account or test with:</div>
+            <div class="demo-credentials">Username: test<br>Password: test1234</div>
+            <div style="margin-top: 10px; opacity: 0.7;">Experience real-time activity tracking, AI coaching, and performance analytics!</div>
+        </div>
+        """, unsafe_allow_html=True)
         
-        st.markdown('</div>', unsafe_allow_html=True)
+        # Motivational testimonial
+        st.markdown("""
+        <div class="testimonial-box">
+            <div style="font-size: 16px; margin-bottom: 10px;">⭐⭐⭐⭐⭐</div>
+            <div>"CoachBot AI transformed my training routine. The personalized insights and real-time feedback helped me achieve my fitness goals 40% faster!"</div>
+            <div class="testimonial-author">— Elite Athlete, Performance Champion 🏆</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown('<p class="footer-text">🔒 Secure • 🚀 Powerful • 🤖 Intelligent</p>', unsafe_allow_html=True)
+        
+        st.markdown('</div></div>', unsafe_allow_html=True)
     
-    # Right side sports symbols
+    # Right decorative elements
     with col3:
         st.markdown("""
-        <div style="text-align: center; padding: 40px 10px; font-size: 50px;">
-            <div>🏒</div>
-            <div style="margin: 30px 0;">🏑</div>
-            <div style="margin: 30px 0;">🏓</div>
-            <div style="margin: 30px 0;">⛳</div>
-            <div style="margin: 30px 0;">🥊</div>
+        <div style="text-align: center; padding: 50px 10px; font-size: 48px; opacity: 0.5; animation: float-reverse 4s ease-in-out infinite;">
+            <div>⚽</div>
+            <div style="margin: 45px 0;">🏀</div>
+            <div style="margin: 45px 0;">💡</div>
+            <div style="margin: 45px 0;">📈</div>
+            <div style="margin: 45px 0;">🎖️</div>
         </div>
+        <style>
+        @keyframes float-reverse {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+        </style>
         """, unsafe_allow_html=True)
 
 # Show login/signup page if not logged in
