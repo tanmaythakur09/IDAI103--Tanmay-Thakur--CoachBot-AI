@@ -9,7 +9,7 @@ CoachBot AI generates structured, personalized training and development plans fo
 ## 🌐 Live Application
 
 🔗 Streamlit App:  
-https://idai103--tanmay-thakur--coachbot-ai.streamlit.app/
+https://idai103--tanmay-thakur--coachbot-ai.streamlit.app/ 
 
 💻 GitHub Repository:  
 https://github.com/tanmaythakur09/IDAI103--Tanmay-Thakur--CoachBot-AI
