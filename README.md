@@ -124,5 +124,3 @@ streamlit run app.py
 **Course:** IDAI103 – Generative AI  
 
 ---
->>>>>>> 126d9d0d0448c754e5446c8bf2b94660b3136a7d
-
