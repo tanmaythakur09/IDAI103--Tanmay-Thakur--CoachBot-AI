@@ -152,31 +152,37 @@ Deployment Steps:
 
 ## 📸 Application Screenshots
 
-### 1. Login & Dashboard Page
-![Login & Dashboard] 
+### 1. Login & Dashboard Page 
 <img width="1913" height="992" alt="1_login_dashboard" src="https://github.com/user-attachments/assets/a085c35e-0b07-4f72-a591-df6da5106537" />
 
 
 ### 2. Home Page
-![Workout Plans](screenshots/2_home_page.png)
+<img width="1919" height="970" alt="2_home_page" src="https://github.com/user-attachments/assets/c1a9a2a3-57ca-496e-9ae6-f87554da143d" />
+
 
 ### 3. Plan Generator
-![Recovery Tab](screenshots/3_plan_generator.png)
+<img width="1919" height="1002" alt="3_plan_generator" src="https://github.com/user-attachments/assets/2c7bcd3b-a86e-494d-9680-e7997f979d85" />
+
 
 ### 4. Performance Analytics
-![Help Chatbot](screenshots/4_performance_analytics.png)
+<img width="1916" height="994" alt="4_performance_analytics" src="https://github.com/user-attachments/assets/61e23cae-88f5-4fe2-ac76-99d960b6b0e9" />
+
 
 ### 5. Achievements & Badges
-![Nutrition & Profile](5_achievements_and_badges.png)
+<img width="1918" height="936" alt="5_achievements_and_badges" src="https://github.com/user-attachments/assets/41a9e98c-fbb2-4221-b901-307dfe19e69a" />
+
 
 ### 6. Community & Challenges
-![Recovery Tab](6_community_and_challenges.png)
+<img width="1913" height="994" alt="6_community_and_challenges" src="https://github.com/user-attachments/assets/ff5c25d6-1c7f-42a7-887b-804ac7c634f2" />
+
 
 ### 7. Advanced AI Coach
-![Help Chatbot](7_advanced_AI_coach.png)
+<img width="1919" height="987" alt="7_advanced_AI_coach" src="https://github.com/user-attachments/assets/900ea734-ea5f-4d60-971b-a6a5892698cb" />
+
 
 ### 8. Support Center
-![Nutrition & Profile](8_support_center.png)
+<img width="1919" height="967" alt="8_support_center" src="https://github.com/user-attachments/assets/30bbc527-74df-4acd-9738-c6bae887159c" />
+
 
 ---
 
