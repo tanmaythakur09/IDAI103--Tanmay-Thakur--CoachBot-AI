@@ -141,25 +141,6 @@ Deployment Steps:
 
 ---
 
-## 📸 Application Screenshots
-
-### 🔐 Login Interface
-![Login Page](screenshots/login.png)
-
-### 📊 Dashboard View
-![Dashboard](screenshots/dashboard.png)
-
-### 🏋️ Training Plan Output
-![Training Plan](screenshots/plan_output.png)
-
-### 💬 Help Assistant
-![Chatbot](screenshots/chatbot.png)
-
-### 🔑 Gemini API Setup
-![API Setup](screenshots/api_setup.png)
-
----
-
 ## 📚 References
 
 - Gemini API Documentation – https://ai.google.dev
