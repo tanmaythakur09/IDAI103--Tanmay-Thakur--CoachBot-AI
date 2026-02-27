@@ -169,6 +169,34 @@ Deployment Steps:
 
 ---
 
+## 📸 Application Screenshots
+
+### 1. Login & Dashboard Page
+![Login & Dashboard](screenshots/1_login_dashboard.png)
+
+### 2. Home Page
+![Workout Plans](screenshots/2_home_page.png)
+
+### 3. Plan Generator
+![Recovery Tab](screenshots/3_plan_generator.png)
+
+### 4. Performance Analytics
+![Help Chatbot](screenshots/4_performance_analytics.png)
+
+### 5. Achievements & Badges
+![Nutrition & Profile](5_achievements_and_badges.png)
+
+### 6. Community & Challenges
+![Recovery Tab](6_community_and_challenges.png)
+
+### 7. Advanced AI Coach
+![Help Chatbot](7_advanced_AI_coach.png)
+
+### 8. Support Center
+![Nutrition & Profile](8_support_center.png)
+
+---
+
 ## 👨‍🎓 Student Information
 
 Name: Tanmay Thakur  
@@ -185,3 +213,4 @@ CoachBot AI demonstrates real-world application of Generative AI in sports perfo
 
 This solution promotes inclusive access to AI-powered coaching tools for youth athletes and aligns with the objectives of the IDAI103 Summative Assessment.
 
+---
