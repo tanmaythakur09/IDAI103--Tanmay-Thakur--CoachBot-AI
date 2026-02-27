@@ -1,127 +1,187 @@
-# 🏆 CoachBot AI
-
-AI-Powered Smart Performance Assistant built using Generative AI.
-
-CoachBot AI generates structured, personalized training and development plans for young athletes using the Google Gemini API integrated with a Streamlit web application.
+# 🏆 CoachBot AI  
+Smart Fitness Assistance Web App Powered by Generative AI  
 
 ---
 
-## 🌐 Live Application
+## 📌 Project Overview
 
-🔗 Streamlit App:  
-https://idai103--tanmay-thakur--coachbot-ai.streamlit.app/ 
+CoachBot AI is a Generative AI-powered sports performance web application developed under the CRS Artificial Intelligence (IDAI103) Summative Assessment.
 
-💻 GitHub Repository:  
-https://github.com/tanmaythakur09/IDAI103--Tanmay-Thakur--CoachBot-AI
+This project aligns with **Scenario 2: Smart Fitness Assistance Web App Powered by Generative AI**.
 
----
+The system bridges the gap in professional coaching access by providing:
 
-## 🚀 Features
+- Personalized training plans
+- Injury-aware recovery routines
+- Tactical advice
+- Nutrition guidance
+- Mental conditioning support
 
-- 🏋️ Weekly Training Plan Generation  
-- 🩺 Injury & Recovery Guidance  
-- 🎯 Tactical Development Advice  
-- 🥗 Nutrition & Hydration Support  
-- 🧠 Mental Conditioning Plan  
-- 🎛 Adjustable AI Creativity (Temperature Control)  
-- 💻 Interactive Streamlit Dashboard  
+The application integrates **Google Gemini 1.5 API** with a Streamlit-based web interface to generate structured, age-appropriate, and safe performance plans for youth athletes.
 
 ---
 
-## 🛠️ Tech Stack
+## 🎯 Problem Definition & Research
 
-- Python  
-- Streamlit  
-- Google Gemini API  
-- Git & GitHub  
-- Streamlit Cloud Deployment  
+Many young athletes lack access to personalized coaching, especially in under-resourced regions. Generic training programs often ignore:
 
----
+- Player position differences
+- Injury history
+- Age-specific training needs
+- Nutrition customization
 
-## 📂 Project Structure
+Research conducted included:
 
-```
-CoachBot-AI/
-│
-├── app.py
-├── requirements.txt
-└── README.md
-```
+- Sport-specific conditioning models (football, cricket, athletics)
+- Youth injury prevention frameworks
+- AI-assisted personalized fitness systems
+- Generative AI prompt design strategies
+
+The objective was to design a structured AI assistant capable of acting as a virtual youth performance coach.
 
 ---
 
-## ⚙️ Installation & Local Setup
+## 🧠 Model Integration & Configuration
 
-### 1️⃣ Clone Repository
+### API Used
+- Google Gemini 1.5 (via `google-generativeai`)
 
-```
-git clone https://github.com/tanmaythakur09/IDAI103--Tanmay-Thakur--CoachBot-AI.git
-cd IDAI103--Tanmay-Thakur--CoachBot-AI
-```
+### Integration
+- Python-based Streamlit web app
+- Structured prompt engineering
+- Dynamic user input capture
 
-### 2️⃣ Create Virtual Environment
+### Hyperparameter Tuning
 
-```
-python -m venv .venv
-.venv\Scripts\activate
-```
+| Parameter | Value Used | Purpose |
+|------------|------------|----------|
+| Temperature | 0.4–0.7 | Balance safety & creativity |
+| Top_p | Default | Maintain coherent structure |
 
-### 3️⃣ Install Dependencies
+Lower temperature used for:
+- Injury recovery plans
+- Safety-focused outputs
 
-```
-pip install -r requirements.txt
-```
-
-### 4️⃣ Add Your Gemini API Key
-
-Set your environment variable:
-
-```
-GOOGLE_API_KEY=your_api_key_here
-```
-
-### 5️⃣ Run Application
-
-```
-streamlit run app.py
-```
+Higher temperature used for:
+- Tactical creativity
+- Nutrition variations
 
 ---
 
-## 🧠 How It Works
+## 🧩 Prompt Engineering (10 Core Features)
 
-1. User enters athlete profile details  
-2. Structured prompt is generated dynamically  
-3. Gemini model processes the input context  
-4. AI generates a multi-section performance plan  
-5. Streamlit displays a formatted, structured output  
+Below are the primary prompts implemented:
 
----
+1. Generate a full weekly training plan for a [position] in [sport].
+2. Create a safe recovery routine for an athlete with [injury].
+3. Provide tactical advice to improve [specific skill].
+4. Suggest a week-long nutrition plan for a 15-year-old [diet type].
+5. Design a personalized warm-up and cooldown sequence.
+6. Generate hydration and electrolyte strategy for training days.
+7. Provide pre-match mental conditioning routine.
+8. Suggest mobility exercises for injury prevention.
+9. Generate stamina-building drills for tournament preparation.
+10. Create low-impact conditioning program for post-injury athletes.
 
-## 🔐 Ethical Considerations
-
-- No personal data storage  
-- Advisory-only AI guidance  
-- Injury-aware training suggestions  
-- Designed with youth athlete safety in mind  
-
----
-
-## 📈 Future Improvements
-
-- Chat-style conversational AI interface  
-- Performance tracking dashboard  
-- PDF export functionality  
-- Advanced analytics & insights  
+Prompts were refined through testing for:
+- Clarity
+- Safety
+- Structured output formatting
 
 ---
 
-## 👨‍💻 Project Information
+## 🧪 Model Testing, Validation & Optimization
 
-**Name:** Tanmay Thakur  
-**Student ID:** 1000389  
-**School:** Viraj International School  
-**Course:** IDAI103 – Generative AI  
+Testing was conducted across:
+
+- Multiple sports (Football, Cricket, Athletics)
+- Different positions (Goalkeeper, Striker, Bowler)
+- Injury combinations
+- Youth age variations
+
+Validation Methods:
+- Cross-checking with sports science sources
+- Comparing recovery advice to known safe practices
+- Refining prompts for clearer structure
+
+Optimization Steps:
+- Adjusted temperature for stability
+- Added structured section headings
+- Improved injury-awareness phrasing
 
 ---
+
+## 💻 Web Application Features
+
+- Login & Register Interface (Session-based)
+- Interactive Dashboard
+- Sidebar Navigation
+- Expandable Output Sections
+- Performance Metrics Display
+- Help Assistant Chatbot
+- Sports-Tech Themed UI
+- Fully deployed via Streamlit Cloud
+
+---
+
+## 🌐 Deployment Details
+
+GitHub Repository:  
+https://github.com/tanmaythakur09/IDAI103--Tanmay-Thakur--CoachBot-AI  
+
+Streamlit App:  
+https://idai103--tanmay-thakur--coachbot-ai.streamlit.app/  
+
+Deployment Steps:
+1. Created app.py
+2. Generated requirements.txt
+3. Pushed to GitHub
+4. Deployed via Streamlit Cloud
+5. Tested across desktop & mobile
+
+---
+
+## 📸 Application Screenshots
+
+### 🔐 Login Interface
+![Login Page](screenshots/login.png)
+
+### 📊 Dashboard View
+![Dashboard](screenshots/dashboard.png)
+
+### 🏋️ Training Plan Output
+![Training Plan](screenshots/plan_output.png)
+
+### 💬 Help Assistant
+![Chatbot](screenshots/chatbot.png)
+
+### 🔑 Gemini API Setup
+![API Setup](screenshots/api_setup.png)
+
+---
+
+## 📚 References
+
+- Gemini API Documentation – https://ai.google.dev
+- AI in Fitness Applications – https://www.ijisrt.com/artificial-intelligence-powered-fitness-web-app
+- Youth Injury Prevention Research – NCBI Sports Medicine Resources
+- Generative AI Prompt Engineering Strategies – Google AI Documentation
+
+---
+
+## 👨‍🎓 Student Information
+
+Name: Tanmay Thakur  
+Student ID: 1000389  
+CRS: Artificial Intelligence  
+Course: Generative A.I (IDAI103)  
+School: Viraj International School  
+
+---
+
+## ✅ Conclusion
+
+CoachBot AI demonstrates real-world application of Generative AI in sports performance planning. The project integrates structured prompt engineering, model configuration, testing, and deployment into a functional and user-friendly web platform.
+
+This solution promotes inclusive access to AI-powered coaching tools for youth athletes and aligns with the objectives of the IDAI103 Summative Assessment.
 
