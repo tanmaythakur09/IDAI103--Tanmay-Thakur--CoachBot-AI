@@ -153,7 +153,9 @@ Deployment Steps:
 ## 📸 Application Screenshots
 
 ### 1. Login & Dashboard Page
-![Login & Dashboard](screenshots/1_login_dashboard.png)
+![Login & Dashboard] 
+<img width="1913" height="992" alt="1_login_dashboard" src="https://github.com/user-attachments/assets/a085c35e-0b07-4f72-a591-df6da5106537" />
+
 
 ### 2. Home Page
 ![Workout Plans](screenshots/2_home_page.png)
